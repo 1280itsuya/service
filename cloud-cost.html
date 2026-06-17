@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>無料クラウドコスト診断｜AWS/Vercel/Supabaseのムダを60秒で見える化 - ネット係</title>
+<meta name="description" content="AWS・Vercel・Supabase・監視SaaSの「払いすぎ」を無料セルフ診断。60秒で月いくらムダになっているかを概算し、すぐ効く削減アクションを提示。月額の最適化代行も対応。個人開発〜中小規模向け。">
+<link rel="canonical" href="https://1280itsuya.github.io/service/cloud-cost.html">
+<meta property="og:title" content="無料クラウドコスト診断｜払いすぎを60秒で見える化">
+<meta property="og:description" content="AWS/Vercel/Supabase/監視SaaSのムダを無料セルフ診断。すぐ効く削減手順つき。月額最適化代行も。">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Service","name":"クラウド/SaaSコスト最適化 診断・運用代行","provider":{"@type":"ProfessionalService","name":"ネット係","email":"1280itsuya@gmail.com"},"areaServed":"JP","description":"AWS/Vercel/Supabase/監視SaaSなどクラウド・SaaSの請求を診断し、ムダを特定して月額で最適化・監視を代行。無料セルフ診断あり。","offers":{"@type":"Offer","priceCurrency":"JPY","price":"30000"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"診断は無料ですか？","acceptedAnswer":{"@type":"Answer","text":"はい。このページのセルフ診断は無料・登録不要・その場で結果が出ます。さらに踏み込んだ人による無料診断レポート（48時間）もメール1通で承ります。"}},
+{"@type":"Question","name":"どんなサービスのコストを見られますか？","acceptedAnswer":{"@type":"Answer","text":"AWS/GCP/Azureなどのクラウド、Vercel/Netlify/Supabase/PlanetScaleなどのPaaS、Datadog/New Relicなどの監視SaaS、各種サブスクの棚卸しに対応します。"}},
+{"@type":"Question","name":"料金は？","acceptedAnswer":{"@type":"Answer","text":"セルフ診断は無料。人による初回最適化はスポット¥30,000〜、継続的な監視・最適化は月額¥30,000〜です。削減できなければ意味がないため、無料診断で見込みを先にお出しします。"}}
+]}
+</script>
+<style>
+:root{--ac:#0f766e;--ac2:#0ea5e9;--bg:#f8fafc;--tx:#0f172a;--sub:#475569;--warn:#b45309}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Hiragino Sans","Yu Gothic",sans-serif;color:var(--tx);background:var(--bg);line-height:1.9}
+.hero{text-align:center;padding:64px 24px 48px;background:linear-gradient(160deg,#ecfdf5,#f0f9ff 60%,#ecfeff)}
+.hero h1{font-size:clamp(1.5rem,5vw,2.4rem);margin:14px 0 12px}
+.hero p{color:var(--sub);max-width:680px;margin:0 auto}
+.badge{display:inline-block;background:#fef3c7;color:#92400e;font-weight:700;font-size:.85rem;padding:5px 16px;border-radius:999px}
+.btn{display:inline-block;background:var(--ac);color:#fff;font-weight:700;padding:16px 44px;border-radius:999px;text-decoration:none;margin:24px 6px 0;box-shadow:0 8px 24px rgba(15,118,110,.3);border:none;cursor:pointer;font-size:1rem}
+section{max-width:920px;margin:0 auto;padding:52px 24px}
+h2{text-align:center;font-size:1.4rem;margin-bottom:28px}
+h2::after{content:"";display:block;width:48px;height:4px;background:var(--ac);margin:12px auto 0;border-radius:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 4px 20px rgba(15,23,42,.06)}
+.card h3{font-size:1.02rem;margin-bottom:6px;color:var(--ac)}
+.card p{color:var(--sub);font-size:.92rem}
+/* diagnostic */
+.diag{background:#fff;border-radius:20px;padding:28px 24px;box-shadow:0 8px 30px rgba(15,23,42,.08);max-width:680px;margin:0 auto}
+.q{padding:14px 0;border-bottom:1px solid #eef2f7}
+.q:last-of-type{border-bottom:none}
+.q label{display:block;font-weight:700;margin-bottom:8px;font-size:.98rem}
+.q .opts{display:flex;flex-wrap:wrap;gap:8px}
+.q .opts button{flex:1 1 auto;min-width:70px;padding:9px 12px;border:1px solid #cbd5e1;background:#f8fafc;border-radius:10px;cursor:pointer;font-size:.9rem;color:var(--tx)}
+.q .opts button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.result{margin-top:24px;padding:24px;border-radius:16px;background:linear-gradient(160deg,#ecfdf5,#eff6ff);display:none}
+.result.show{display:block}
+.result .big{font-size:2rem;font-weight:800;color:var(--warn);text-align:center;margin:6px 0}
+.result ul{margin:14px 0 0 18px;color:var(--tx)}
+.result ul li{margin:6px 0}
+.muted{color:var(--sub);font-size:.82rem}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.plan{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;text-align:center}
+.plan .y{color:var(--ac);font-weight:800;font-size:1.4rem}
+.plan.reco{border:2px solid var(--ac);position:relative}
+.plan.reco::before{content:"おすすめ";position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;font-size:.75rem;font-weight:700;padding:3px 14px;border-radius:999px}
+.cta{text-align:center;background:linear-gradient(160deg,#134e4a,#0f766e);color:#fff;border-radius:20px;padding:44px 24px}
+.cta h2{color:#fff}.cta h2::after{background:#fff}
+.cta .mail{font-size:1.2rem;font-weight:800;margin:8px 0}
+.note{color:#a7f3d0;font-size:.85rem}
+footer{text-align:center;color:var(--sub);font-size:.82rem;padding:24px;border-top:1px solid #e2e8f0}
+</style></head>
+<body>
+<div class="hero">
+<span class="badge">無料・登録不要・60秒・その場で結果</span>
+<h1>そのクラウド請求、<br>毎月いくら「払いすぎ」ですか？</h1>
+<p>AWS・Vercel・Supabase・監視SaaS…使っていないリソースや過剰なプランに、気づかぬうち毎月お金が溶けています。下の質問に答えるだけで、<b>ムダの概算</b>と<b>今日から効く削減手順</b>がその場で出ます。</p>
+<a class="btn" href="#diag">無料でセルフ診断する</a>
+</div>
+
+<section id="diag">
+<h2>クラウドコスト セルフ診断</h2>
+<div class="diag">
+<div id="questions"></div>
+<div style="text-align:center"><button class="btn" id="calcBtn">結果を見る</button></div>
+<div class="result" id="result">
+<p style="text-align:center;font-weight:700">推定で、毎月このくらいムダになっている可能性があります</p>
+<div class="big" id="amount">—</div>
+<p class="muted" style="text-align:center">※一般的な構成での概算レンジです。実際の額は請求の中身で変わります（正確な額は無料の人診断でお出しします）。</p>
+<div id="actions"></div>
+<div style="text-align:center"><a class="btn" href="#apply">この内容で無料診断レポートを依頼する（48h）</a></div>
+</div>
+</div>
+</section>
+
+<section>
+<h2>よくある「溶けているお金」</h2>
+<div class="grid">
+<div class="card"><h3>未使用リソースの放置</h3><p>停止し忘れたEC2/RDS、未アタッチのEBS・Elastic IP、消し忘れた検証環境。</p></div>
+<div class="card"><h3>過剰なプラン・枠</h3><p>使っていない上位プラン、無料枠で足りるのに有料、人数分の余ったシート。</p></div>
+<div class="card"><h3>監視/ログの課金爆発</h3><p>Datadog・ログ転送・S3保管の従量課金が知らぬ間に膨張。</p></div>
+<div class="card"><h3>サブスクの棚卸し漏れ</h3><p>解約忘れ・重複ツール・年払いで惰性更新しているSaaS。</p></div>
+</div>
+</section>
+
+<section>
+<h2>料金</h2>
+<div class="price">
+<div class="plan"><div class="y">¥0</div><h3>セルフ＆人診断</h3><p>このページの自己診断＋メール1通で人による削減レポート（48h・無料）</p></div>
+<div class="plan reco"><div class="y">¥30,000<small>〜</small></div><h3>スポット最適化</h3><p>請求を実査→ムダを特定・除去し、再発しない設定まで実施（単発）</p></div>
+<div class="plan"><div class="y">¥30,000<small>/月〜</small></div><h3>継続モニタリング</h3><p>毎月の請求を監視し、増えた所を都度最適化＋削減レポート</p></div>
+</div>
+<p style="text-align:center;color:var(--sub);margin-top:16px;font-size:.9rem">※「削減できなければ意味がない」ため、まず無料診断で見込み額をお出しします。効果が薄ければ無理にお勧めしません。</p>
+</section>
+
+<section id="apply">
+<div class="cta">
+<h2>無料 クラウドコスト診断レポート</h2>
+<p>請求のスクショ or おおまかな構成を送るだけ。48時間以内に「どこを・いくら・どう削るか」を無料でお返しします。</p>
+<p class="mail">📧 1280itsuya@gmail.com</p>
+<a class="btn" style="background:#fff;color:var(--ac)" href="mailto:1280itsuya@gmail.com?subject=%E7%84%A1%E6%96%99%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%82%B9%E3%83%88%E8%A8%BA%E6%96%AD%E5%B8%8C%E6%9C%9B&body=%E2%96%A0%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%2FSaaS%EF%BC%88AWS%2FVercel%2FSupabase%E7%AD%89%EF%BC%89%EF%BC%9A%0A%E2%96%A0%E6%9C%88%E3%81%AE%E3%81%8A%E3%81%8A%E3%82%88%E3%81%9D%E3%81%AE%E8%AB%8B%E6%B1%82%E9%A1%8D%EF%BC%9A%0A%E2%96%A0%E6%B0%97%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0A">メールで無料診断を依頼する</a>
+<p class="note">※請求の生データは不要です。構成や概算だけでも診断できます。</p>
+</div>
+</section>
+
+<footer>
+ネット係（個人事業）／ <a href="./">サービス一覧</a>・<a href="ai-shindan.html">AI業務診断</a>・<a href="tokushoho.html">特定商取引法に基づく表記</a>
+<p>© 2026 ネット係（AIマネ研究所）</p>
+</footer>
+
+<script>
+// ── セルフ診断: 透明なヒューリスティック概算。値は「月いくらムダの可能性があるか」のレンジ下限〜上限(円)。
+var QS = [
+ {q:"月のクラウド/SaaS支払いは、ざっくりどのくらい？", o:[
+   {t:"〜1万円", lo:0,  hi:1500},
+   {t:"1〜5万円", lo:2000, hi:9000},
+   {t:"5〜20万円", lo:8000, hi:35000},
+   {t:"20万円〜", lo:25000, hi:90000}]},
+ {q:"未使用かもしれないリソース（停止し忘れた環境・未アタッチのディスク/IP等）に心当たりは？", o:[
+   {t:"ない/把握済", lo:0, hi:0},
+   {t:"たぶん少しある", lo:1500, hi:6000},
+   {t:"かなりありそう", lo:5000, hi:20000}]},
+ {q:"プラン/枠は使い切っている？（上位プラン・余ったシート・無料枠で足りる課金など）", o:[
+   {t:"最適化済", lo:0, hi:0},
+   {t:"見直してない", lo:2000, hi:9000},
+   {t:"明らかに過剰", lo:6000, hi:18000}]},
+ {q:"監視・ログ・ストレージの従量課金を定期的に見ている？", o:[
+   {t:"見ている", lo:0, hi:1000},
+   {t:"たまに", lo:1500, hi:6000},
+   {t:"放置気味", lo:4000, hi:15000}]},
+ {q:"サブスク/SaaSの棚卸し（解約忘れ・重複ツール確認）を最近した？", o:[
+   {t:"した", lo:0, hi:500},
+   {t:"半年以上してない", lo:1500, hi:8000},
+   {t:"したことがない", lo:3000, hi:14000}]}
+];
+var ACT = [
+ "AWS Cost Explorer / 各サービスの請求内訳を「サービス別」で開き、上位3つを特定する",
+ "未使用のEC2/RDS停止・未アタッチEBS/Elastic IPの削除・古いスナップショットの整理",
+ "Vercel/Supabase等は実使用量と無料枠を突き合わせ、過剰プランを1段下げる",
+ "監視SaaS(Datadog等)・ログ転送・S3ライフサイクルの保管期間を見直す",
+ "サブスク一覧を書き出し、重複・解約忘れ・年払い惰性更新を1つずつ判断する"
+];
+var picks = {};
+var qroot = document.getElementById('questions');
+QS.forEach(function(item, qi){
+  var div = document.createElement('div'); div.className='q';
+  var lab = document.createElement('label'); lab.textContent=(qi+1)+'. '+item.q; div.appendChild(lab);
+  var opts = document.createElement('div'); opts.className='opts';
+  item.o.forEach(function(opt, oi){
+    var b = document.createElement('button'); b.type='button'; b.textContent=opt.t;
+    b.onclick=function(){
+      picks[qi]=oi;
+      Array.prototype.forEach.call(opts.children,function(c){c.classList.remove('on');});
+      b.classList.add('on');
+    };
+    opts.appendChild(b);
+  });
+  div.appendChild(opts); qroot.appendChild(div);
+});
+document.getElementById('calcBtn').onclick=function(){
+  var lo=0, hi=0, flags=[];
+  QS.forEach(function(item, qi){
+    var oi = picks[qi]; if(oi===undefined){ return; }
+    var o=item.o[oi]; lo+=o.lo; hi+=o.hi;
+    if(qi>0 && o.hi>0){ flags.push(qi); }
+  });
+  if(Object.keys(picks).length < QS.length){
+    alert('すべての質問に答えると精度が上がります（未回答があります）。');
+  }
+  // 支払い規模(Q0)を上限キャップに使い、非現実的な額を出さない
+  var cap = QS[0].o[picks[0]||0].hi * 1.2 + 2000;
+  hi = Math.min(hi, Math.round(cap));
+  lo = Math.min(lo, hi);
+  var amt = document.getElementById('amount');
+  if(hi<=0){ amt.textContent='ムダは少なめ。よく最適化できています👏'; amt.style.color='#0f766e'; }
+  else { amt.textContent='約 ¥'+lo.toLocaleString()+' 〜 ¥'+hi.toLocaleString()+' / 月'; amt.style.color=''; }
+  var ul=document.createElement('ul');
+  var picked = flags.length? flags : [1,2,3];
+  picked.slice(0,4).forEach(function(qi){ var li=document.createElement('li'); li.textContent=ACT[qi]; ul.appendChild(li); });
+  var actBox=document.getElementById('actions'); actBox.innerHTML='<p style="font-weight:700;margin-bottom:4px">今日から効く順に</p>'; actBox.appendChild(ul);
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+};
+</script>
+</body></html>

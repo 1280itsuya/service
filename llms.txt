@@ -5,5 +5,6 @@
 ## ページ
 - [ネット係 — お店と中小企業のWeb・販促まるごと代行｜LP制作1万円から](https://1280itsuya.github.io/service/): ホームページ・LP制作1万円から、Googleマップの口コミ返信代行、メニュー多言語化、AI検索(GEO)対策まで。お店と中小企業のネットまわりを低価格・短納期で代行します。月額1万円のおまかせプランも。
 - [無料AI業務診断｜あなたの会社の「自動化できる業務」を見つけます - ネット係](https://1280itsuya.github.io/service/ai-shindan.html): 中小企業向け 無料AI業務診断。問い合わせ対応・予約・レポート作成など、AIで自動化できる業務と削減できる手間を無料で診断。IT導入補助金の活用もサポート。月額3万円から。
+- [無料クラウドコスト診断｜AWS/Vercel/Supabaseのムダを60秒で見える化 - ネット係](https://1280itsuya.github.io/service/cloud-cost.html): AWS・Vercel・Supabase・監視SaaSの「払いすぎ」を無料セルフ診断。60秒で月いくらムダになっているかを概算し、すぐ効く削減アクションを提示。月額の最適化代行も対応。個人開発〜中小規模向け。
 - [Claude/AI開発を加速するキット集｜MCP・Claude Code・llms.txt・RAG - ネット係](https://1280itsuya.github.io/service/ai-tools.html): Claude Code×MCP導入キット、llms.txt自動生成、Claude Code実践パック、GitHub Actions記事自動投稿、AI議事録、RAG構築スターター、プロンプト大全、CLAUDE.md雛形集。個人開発者向けの実用キット。
 - [特定商取引法に基づく表記｜ネット係](https://1280itsuya.github.io/service/tokushoho.html)

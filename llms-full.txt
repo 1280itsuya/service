@@ -10,6 +10,10 @@ URL: https://1280itsuya.github.io/service/
 URL: https://1280itsuya.github.io/service/ai-shindan.html
 中小企業向け 無料AI業務診断。問い合わせ対応・予約・レポート作成など、AIで自動化できる業務と削減できる手間を無料で診断。IT導入補助金の活用もサポート。月額3万円から。
 
+## 無料クラウドコスト診断｜AWS/Vercel/Supabaseのムダを60秒で見える化 - ネット係
+URL: https://1280itsuya.github.io/service/cloud-cost.html
+AWS・Vercel・Supabase・監視SaaSの「払いすぎ」を無料セルフ診断。60秒で月いくらムダになっているかを概算し、すぐ効く削減アクションを提示。さらに人による無料診断レポート(48時間)も。継続的な最適化・監視は月額¥30,000〜。個人開発〜中小規模のSaaS運営向け。コスト意識の高い開発者の集客チャネル(devcost記事)からの送客先。
+
 ## Claude/AI開発を加速するキット集｜MCP・Claude Code・llms.txt・RAG - ネット係
 URL: https://1280itsuya.github.io/service/ai-tools.html
 Claude Code×MCP導入キット、llms.txt自動生成、Claude Code実践パック、GitHub Actions記事自動投稿、AI議事録、RAG構築スターター、プロンプト大全、CLAUDE.md雛形集。個人開発者向けの実用キット。
