@@ -12,7 +12,7 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"診断は無料ですか？","acceptedAnswer":{"@type":"Answer","text":"はい。このページのセルフ診断は無料・登録不要・その場で結果が出ます。さらに踏み込んだ人による無料診断レポート（48時間）もメール1通で承ります。"}},
+{"@type":"Question","name":"診断は無料ですか？","acceptedAnswer":{"@type":"Answer","text":"はい。このページのセルフ診断は無料・登録不要・その場で結果が出ます。さらに踏み込んだ人による無料診断レポート（通常2〜3営業日）もメール1通で承ります。"}},
 {"@type":"Question","name":"どんなサービスのコストを見られますか？","acceptedAnswer":{"@type":"Answer","text":"AWS/GCP/Azureなどのクラウド、Vercel/Netlify/Supabase/PlanetScaleなどのPaaS、Datadog/New Relicなどの監視SaaS、各種サブスクの棚卸しに対応します。"}},
 {"@type":"Question","name":"料金は？","acceptedAnswer":{"@type":"Answer","text":"セルフ診断は無料。人による初回最適化はスポット¥30,000〜、継続的な監視・最適化は月額¥30,000〜です。削減できなければ意味がないため、無料診断で見込みを先にお出しします。"}}
 ]}
@@ -43,7 +43,9 @@ h2::after{content:"";display:block;width:48px;height:4px;background:var(--ac);ma
 .q .opts button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .result{margin-top:24px;padding:24px;border-radius:16px;background:linear-gradient(160deg,#ecfdf5,#eff6ff);display:none}
 .result.show{display:block}
-.result .big{font-size:2rem;font-weight:800;color:var(--warn);text-align:center;margin:6px 0}
+.result .verdict{text-align:center;font-weight:800;font-size:1.15rem;margin-bottom:2px}
+.result .big{font-size:1.5rem;font-weight:800;color:var(--tx);text-align:center;margin:2px 0}
+.q .opts button:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
 .result ul{margin:14px 0 0 18px;color:var(--tx)}
 .result ul li{margin:6px 0}
 .muted{color:var(--sub);font-size:.82rem}
@@ -71,12 +73,14 @@ footer{text-align:center;color:var(--sub);font-size:.82rem;padding:24px;border-t
 <div class="diag">
 <div id="questions"></div>
 <div style="text-align:center"><button class="btn" id="calcBtn">結果を見る</button></div>
-<div class="result" id="result">
-<p style="text-align:center;font-weight:700">推定で、毎月このくらいムダになっている可能性があります</p>
+<div class="result" id="result" aria-live="polite">
+<p class="verdict" id="verdict"></p>
+<p style="text-align:center;color:var(--sub);font-size:.88rem;margin-bottom:2px">ご回答からの目安レンジ（自己申告ベース）</p>
 <div class="big" id="amount">—</div>
-<p class="muted" style="text-align:center">※一般的な構成での概算レンジです。実際の額は請求の中身で変わります（正確な額は無料の人診断でお出しします）。</p>
+<p class="muted" style="text-align:center">※ご回答だけからのごく粗い概算で、実際の請求額・削減できる額とは異なります。<b>削減を保証するものではありません。</b>正確な内訳は無料の人診断（メール）でお出しします。</p>
+<p class="muted" id="validnote" style="text-align:center;color:var(--warn);display:none">未回答の質問があります。すべて答えると精度が上がります。</p>
 <div id="actions"></div>
-<div style="text-align:center"><a class="btn" href="#apply">この内容で無料診断レポートを依頼する（48h）</a></div>
+<div style="text-align:center"><a class="btn" href="#apply">この結果をもとに無料診断を依頼する</a></div>
 </div>
 </div>
 </section>
@@ -94,7 +98,7 @@ footer{text-align:center;color:var(--sub);font-size:.82rem;padding:24px;border-t
 <section>
 <h2>料金</h2>
 <div class="price">
-<div class="plan"><div class="y">¥0</div><h3>セルフ＆人診断</h3><p>このページの自己診断＋メール1通で人による削減レポート（48h・無料）</p></div>
+<div class="plan"><div class="y">¥0</div><h3>セルフ＆人診断</h3><p>このページの自己診断＋メール1通で人による削減レポート（無料・通常2〜3営業日）</p></div>
 <div class="plan reco"><div class="y">¥30,000<small>〜</small></div><h3>スポット最適化</h3><p>請求を実査→ムダを特定・除去し、再発しない設定まで実施（単発）</p></div>
 <div class="plan"><div class="y">¥30,000<small>/月〜</small></div><h3>継続モニタリング</h3><p>毎月の請求を監視し、増えた所を都度最適化＋削減レポート</p></div>
 </div>
@@ -104,7 +108,7 @@ footer{text-align:center;color:var(--sub);font-size:.82rem;padding:24px;border-t
 <section id="apply">
 <div class="cta">
 <h2>無料 クラウドコスト診断レポート</h2>
-<p>請求のスクショ or おおまかな構成を送るだけ。48時間以内に「どこを・いくら・どう削るか」を無料でお返しします。</p>
+<p>請求のスクショ or おおまかな構成を送るだけ。「どこを・どう削るか」を無料でお返しします（通常2〜3営業日・混雑時は前後します）。</p>
 <p class="mail">📧 1280itsuya@gmail.com</p>
 <a class="btn" style="background:#fff;color:var(--ac)" href="mailto:1280itsuya@gmail.com?subject=%E7%84%A1%E6%96%99%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B3%E3%82%B9%E3%83%88%E8%A8%BA%E6%96%AD%E5%B8%8C%E6%9C%9B&body=%E2%96%A0%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%2FSaaS%EF%BC%88AWS%2FVercel%2FSupabase%E7%AD%89%EF%BC%89%EF%BC%9A%0A%E2%96%A0%E6%9C%88%E3%81%AE%E3%81%8A%E3%81%8A%E3%82%88%E3%81%9D%E3%81%AE%E8%AB%8B%E6%B1%82%E9%A1%8D%EF%BC%9A%0A%E2%96%A0%E6%B0%97%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%81%93%E3%81%A8%EF%BC%9A%0A">メールで無料診断を依頼する</a>
 <p class="note">※請求の生データは不要です。構成や概算だけでも診断できます。</p>
@@ -152,14 +156,18 @@ var picks = {};
 var qroot = document.getElementById('questions');
 QS.forEach(function(item, qi){
   var div = document.createElement('div'); div.className='q';
-  var lab = document.createElement('label'); lab.textContent=(qi+1)+'. '+item.q; div.appendChild(lab);
+  var lab = document.createElement('label'); lab.id='q'+qi+'-lab'; lab.textContent=(qi+1)+'. '+item.q; div.appendChild(lab);
   var opts = document.createElement('div'); opts.className='opts';
+  opts.setAttribute('role','radiogroup'); opts.setAttribute('aria-labelledby','q'+qi+'-lab');
   item.o.forEach(function(opt, oi){
     var b = document.createElement('button'); b.type='button'; b.textContent=opt.t;
+    b.setAttribute('role','radio'); b.setAttribute('aria-checked','false'); b.setAttribute('aria-pressed','false');
     b.onclick=function(){
       picks[qi]=oi;
-      Array.prototype.forEach.call(opts.children,function(c){c.classList.remove('on');});
-      b.classList.add('on');
+      Array.prototype.forEach.call(opts.children,function(c){
+        c.classList.remove('on'); c.setAttribute('aria-checked','false'); c.setAttribute('aria-pressed','false');
+      });
+      b.classList.add('on'); b.setAttribute('aria-checked','true'); b.setAttribute('aria-pressed','true');
     };
     opts.appendChild(b);
   });
@@ -172,20 +180,27 @@ document.getElementById('calcBtn').onclick=function(){
     var o=item.o[oi]; lo+=o.lo; hi+=o.hi;
     if(qi>0 && o.hi>0){ flags.push(qi); }
   });
-  if(Object.keys(picks).length < QS.length){
-    alert('すべての質問に答えると精度が上がります（未回答があります）。');
-  }
+  // 未回答はalertで遮らず、結果内に控えめに表示(a11y/UX)
+  document.getElementById('validnote').style.display =
+    (Object.keys(picks).length < QS.length) ? 'block' : 'none';
   // 支払い規模(Q0)を上限キャップに使い、非現実的な額を出さない
-  var cap = QS[0].o[picks[0]||0].hi * 1.2 + 2000;
-  hi = Math.min(hi, Math.round(cap));
-  lo = Math.min(lo, hi);
-  var amt = document.getElementById('amount');
-  if(hi<=0){ amt.textContent='ムダは少なめ。よく最適化できています👏'; amt.style.color='#0f766e'; }
-  else { amt.textContent='約 ¥'+lo.toLocaleString()+' 〜 ¥'+hi.toLocaleString()+' / 月'; amt.style.color=''; }
+  var cap = QS[0].o[(picks[0]!==undefined?picks[0]:0)].hi * 1.2 + 2000;
+  hi = Math.min(hi, Math.round(cap)); lo = Math.min(lo, hi);
+  var verdict=document.getElementById('verdict'), amt=document.getElementById('amount');
+  if(hi<=0){
+    verdict.textContent='ムダは少なめ。よく最適化できています'; verdict.style.color='#0f766e';
+    amt.textContent='—';
+  } else {
+    var big = hi >= 10000;
+    verdict.textContent = big ? '削れる箇所がありそうです' : '少し見直す余地がありそうです';
+    verdict.style.color='var(--warn)';
+    amt.textContent='およそ ¥'+lo.toLocaleString()+' 〜 ¥'+hi.toLocaleString()+' / 月（目安）';
+  }
+  // 推奨アクション: 最も普遍的な「請求の可視化」を必ず先頭に。続けて該当質問の対策を重複なく。
+  var order=[0]; (flags.length?flags:[1,2,3]).forEach(function(qi){ if(order.indexOf(qi)<0) order.push(qi); });
   var ul=document.createElement('ul');
-  var picked = flags.length? flags : [1,2,3];
-  picked.slice(0,4).forEach(function(qi){ var li=document.createElement('li'); li.textContent=ACT[qi]; ul.appendChild(li); });
-  var actBox=document.getElementById('actions'); actBox.innerHTML='<p style="font-weight:700;margin-bottom:4px">今日から効く順に</p>'; actBox.appendChild(ul);
+  order.slice(0,4).forEach(function(qi){ var li=document.createElement('li'); li.textContent=ACT[qi]; ul.appendChild(li); });
+  var actBox=document.getElementById('actions'); actBox.innerHTML='<p style="font-weight:700;margin:8px 0 4px">今日から効く順に</p>'; actBox.appendChild(ul);
   document.getElementById('result').classList.add('show');
   document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
 };
