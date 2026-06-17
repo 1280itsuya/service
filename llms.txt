@@ -1,24 +1,9 @@
-# ネット係 (NET-GAKARI)
+# ネット係（AIマネ研究所）
 
-お店と中小企業向けのWeb制作・ネット販促代行サービス。仕組み化による低価格と48時間納品が特徴。
+> お店と中小企業のWeb・AI業務自動化・AI開発キット。低価格×短納期で代行/販売。
 
-## 基本情報
-
-- サービス名: ネット係
-- URL: https://1280itsuya.github.io/service/
-- 連絡先: 1280itsuya@gmail.com
-- 対応地域: 日本全国 (オンライン完結)
-
-## サービスと料金
-
-- ネット集客 健康診断: ¥3,000 (HPと集客を17項目診断、改善優先度レポート)
-- 1ページLP・ホームページ制作: ¥10,000 (構成・コピー・スマホ対応込み、48時間納品)
-- お店のネット係 おまかせプラン: 月額¥10,000 (口コミ返信30件+SNS投稿文+記事+月次レポート)
-- Googleマップ口コミ返信代行: ¥3,000〜 (低評価対応含む)
-- メニュー・案内の多言語化: ¥5,000〜 (英語・中国語・韓国語、印刷用デザイン込み)
-- AI検索(GEO)対策: ¥10,000〜 (llms.txt・構造化データ・事実ページの実装)
-
-## 主要ページ
-
-- [サービス一覧と料金](https://1280itsuya.github.io/service/)
-- [特定商取引法に基づく表記](https://1280itsuya.github.io/service/tokushoho.html)
+## ページ
+- [ネット係 — お店と中小企業のWeb・販促まるごと代行｜LP制作1万円から](https://1280itsuya.github.io/service/): ホームページ・LP制作1万円から、Googleマップの口コミ返信代行、メニュー多言語化、AI検索(GEO)対策まで。お店と中小企業のネットまわりを低価格・短納期で代行します。月額1万円のおまかせプランも。
+- [無料AI業務診断｜あなたの会社の「自動化できる業務」を見つけます - ネット係](https://1280itsuya.github.io/service/ai-shindan.html): 中小企業向け 無料AI業務診断。問い合わせ対応・予約・レポート作成など、AIで自動化できる業務と削減できる手間を無料で診断。IT導入補助金の活用もサポート。月額3万円から。
+- [Claude/AI開発を加速するキット集｜MCP・Claude Code・llms.txt・RAG - ネット係](https://1280itsuya.github.io/service/ai-tools.html): Claude Code×MCP導入キット、llms.txt自動生成、Claude Code実践パック、GitHub Actions記事自動投稿、AI議事録、RAG構築スターター、プロンプト大全、CLAUDE.md雛形集。個人開発者向けの実用キット。
+- [特定商取引法に基づく表記｜ネット係](https://1280itsuya.github.io/service/tokushoho.html)

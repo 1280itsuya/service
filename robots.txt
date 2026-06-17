@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://1280itsuya.github.io/service/sitemap.xml
